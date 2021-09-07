@@ -1,0 +1,3 @@
+[submodule "basil"]
+	path = basil
+	url = https://github.com/cristeigabriel/basil
