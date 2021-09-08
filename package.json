@@ -1,0 +1,19 @@
+{
+  "name": "basil",
+  "version": "0.0.1",
+  "description": "JavaScript bindings of the Modern C++ 32-bit Windows Process Memory Library, basil.",
+  "main": "lib/basil.js",
+  "keywords": [
+    "basil",
+    "memory",
+    "windows",
+    "read",
+    "write"
+  ],
+  "author": "otvv & cristeigabriel",
+  "license": "WTFPL",
+  "dependencies": {
+    "node-addon-api": "^2.0.0",
+    "node-gyp": "^6.1.0"
+  }
+}
