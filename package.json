@@ -3,6 +3,14 @@
   "version": "0.0.1",
   "description": "JavaScript bindings of the Modern C++ 32-bit Windows Process Memory Library, basil.",
   "main": "lib/basil.js",
+  "gypfile": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristeigabriel/basil-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cristeigabriel/basil-js/issues"
+  },
   "keywords": [
     "basil",
     "memory",
@@ -13,7 +21,7 @@
   "author": "otvv & cristeigabriel",
   "license": "WTFPL",
   "dependencies": {
-    "node-addon-api": "^2.0.0",
-    "node-gyp": "^6.1.0"
+    "node-addon-api": "^2.0.2",
+    "node-gyp": "^8.2.0"
   }
 }
