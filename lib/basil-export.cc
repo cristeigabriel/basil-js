@@ -14,7 +14,7 @@
 
 namespace basiljs {
 Napi::Object basil_ctor(const Napi::CallbackInfo& info) {
-    const auto& env = info.Env();
+    const Napi::Env& env = info.Env();
     if (info.Length() != 1) {
         Napi::TypeError::New(env, "Constructor wasn't given either enough arguments.").ThrowAsJavaScriptException();
     }
@@ -27,6 +27,13 @@ Napi::Object basil_ctor(const Napi::CallbackInfo& info) {
     try {
         basil::ctx ctx(info[0].ToString());
         ret.Set("name", Napi::String::New(env, ctx.get_name()));
+
+        const auto pid = ctx.get_pid();
+        if (pid.has_value()) {
+            ret.Set("pid", Napi::Number::New(env, pid.value()));
+        } else {
+            throw std::runtime_error("UB: PID wasn't set.");
+        }
     } catch (const std::exception& err) {
         Napi::TypeError::New(env, err.what()).ThrowAsJavaScriptException();
         goto as_is;
