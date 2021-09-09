@@ -10,38 +10,35 @@
  */
 
 #include "../basil/basil.hh"
-
 #include <napi.h>
 
-double function_test(double test) {
-
-  return test+50.5;
-}
-
-using namespace basil;
 namespace basiljs {
-Napi::Number WRAPPER(const Napi::CallbackInfo& info) {
-    // environment
-    Napi::Env env = info.Env();
-
-    // check if the arguments provided are valid
-    if (info.Length() < 1 || !info[0].IsNumber()) {
-        Napi::TypeError::New(env, "GENERIC ERROR MESSAGE HERE:").ThrowAsJavaScriptException();
+Napi::Object basil_ctor(const Napi::CallbackInfo& info) {
+    const auto& env = info.Env();
+    if (info.Length() != 1) {
+        Napi::TypeError::New(env, "Constructor wasn't given either enough arguments.").ThrowAsJavaScriptException();
     }
 
-    // create a "variable"
-    // object or w/e
-    Napi::Number addressToCall = info[0].As<Napi::Number>();
+    if (!info[0].IsString()) {
+        Napi::TypeError::New(env, "Constructor wasn't given a string argument. The constructor argument must look like \"process_name.exe\".").ThrowAsJavaScriptException();
+    }
 
-    // do something with that object we created
-    Napi::Number returnValue = Napi::Number::New(env, function_test(addressToCall.DoubleValue()));
+    Napi::Object ret = Napi::Object::New(env);
+    try {
+        basil::ctx ctx(info[0].ToString());
+        ret.Set("name", Napi::String::New(env, ctx.get_name()));
+    } catch (const std::exception& err) {
+        Napi::TypeError::New(env, err.what()).ThrowAsJavaScriptException();
+        goto as_is;
+    }
 
-    return returnValue;
+as_is:
+    return ret;
 }
 }  // namespace basiljs
 
 Napi::Object Initialize(Napi::Env env, Napi::Object exports) {
-    exports.Set("function_test", Napi::Function::New(env, basiljs::WRAPPER));
+    exports.Set("new", Napi::Function::New(env, basiljs::basil_ctor));
 
     return exports;
 }
