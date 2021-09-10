@@ -21,7 +21,7 @@
   "author": "otvv & cristeigabriel",
   "license": "WTFPL",
   "dependencies": {
-    "node-addon-api": "^2.0.2",
+    "node-addon-api": "^4.1.0",
     "node-gyp": "^8.2.0"
   }
 }

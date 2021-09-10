@@ -13,7 +13,9 @@
                 "<!@(node -p \"require('node-addon-api').include\")"
             ],
             'defines': [
-                "NAPI_CPP_EXCEPTIONS"
+                "NAPI_CPP_EXCEPTIONS",
+                "NAPI_EXPERIMENTAL",
+                "NAPI_VERSION=6"
             ],
             "msbuild_settings": {
                 "ClCompile": {
